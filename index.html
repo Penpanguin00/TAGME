@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <title>TAGME – ระบบลิสแบน & พวงกุญแจ NFC</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #4f46e5;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    h2 { color: #4f46e5; }
+    label { display: block; margin-top: 10px; }
+    input, textarea, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #4f46e5;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover { background: #4338ca; }
+    .profile {
+      border: 2px dashed #4f46e5;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 15px;
+    }
+    .note {
+      font-size: 14px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>TAGME</h1>
+    <p>ระบบลิสแบนและพวงกุญแจ NFC เพื่อป้องกันการพลัดหลงและสูญหาย</p>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <h2>ลงทะเบียนผู้ใช้</h2>
+      <label>ชื่อ-นามสกุล</label>
+      <input id="name" type="text" />
+
+      <label>อายุ</label>
+      <input id="age" type="number" />
+
+      <label>กลุ่มผู้ใช้</label>
+      <select id="group">
+        <option>เด็ก</option>
+        <option>ผู้สูงอายุ</option>
+        <option>บุคคลทั่วไป</option>
+      </select>
+
+      <label>โรคประจำตัว / ข้อมูลสำคัญ</label>
+      <textarea id="medical"></textarea>
+
+      <label>เบอร์ติดต่อฉุกเฉิน</label>
+      <input id="phone" type="text" />
+
+      <button onclick="generateProfile()">สร้างโปรไฟล์</button>
+    </div>
+
+    <div class="card">
+      <h2>หน้าโปรไฟล์ (สำหรับ QR / NFC)</h2>
+      <div class="profile" id="profile">
+        <p class="note">ยังไม่มีข้อมูล</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function generateProfile() {
+      const name = document.getElementById('name').value;
+      const age = document.getElementById('age').value;
+      const group = document.getElementById('group').value;
+      const medical = document.getElementById('medical').value;
+      const phone = document.getElementById('phone').value;
+
+      document.getElementById('profile').innerHTML = `
+        <h3>${name}</h3>
+        <p><b>อายุ:</b> ${age} ปี</p>
+        <p><b>กลุ่มผู้ใช้:</b> ${group}</p>
+        <p><b>ข้อมูลสำคัญ:</b> ${medical}</p>
+        <p><b>ติดต่อ:</b> <a href="tel:${phone}">${phone}</a></p>
+      `;
+    }
+  </script>
+</body>
+</html>
