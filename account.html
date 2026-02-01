@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>TAGME System</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f6f8;
+  padding: 40px;
+}
+
+.box {
+  max-width: 400px;
+  margin: auto;
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+}
+
+h2 {
+  text-align: center;
+}
+
+input, button {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+}
+
+button {
+  background: #446e5f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+.link {
+  text-align: center;
+  margin-top: 10px;
+  cursor: pointer;
+  color: #446e5f;
+}
+
+.page {
+  display: none;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div id="loginPage" class="box page">
+  <h2>เข้าสู่ระบบ TAGME</h2>
+  <input type="email" id="loginEmail" placeholder="อีเมล">
+  <input type="password" id="loginPassword" placeholder="รหัสผ่าน">
+  <input type="checkbox" onclick="togglePassword('loginPassword')"> แสดงรหัสผ่าน
+  <button onclick="login()">เข้าสู่ระบบ</button>
+  <div class="link" onclick="showPage('registerPage')">สมัครสมาชิก</div>
+</div>
+
+<!-- REGISTER -->
+<div id="registerPage" class="box page">
+  <h2>สมัครสมาชิก</h2>
+  <input type="email" id="regEmail" placeholder="อีเมล">
+  <input type="password" id="regPassword" placeholder="รหัสผ่าน">
+  <input type="checkbox" onclick="togglePassword('regPassword')"> แสดงรหัสผ่าน
+  <button onclick="register()">สมัครสมาชิก</button>
+  <div class="link" onclick="showPage('loginPage')">กลับไปหน้าเข้าสู่ระบบ</div>
+</div>
+
+<!-- PROFILE -->
+<div id="profilePage" class="box page">
+  <h2>บัญชีของคุณ</h2>
+  <p><b>อีเมล:</b> <span id="showEmail"></span></p>
+  <button onclick="logout()">ออกจากระบบ</button>
+</div>
+
+<script>
+function showPage(pageId) {
+  document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+  document.getElementById(pageId).style.display = 'block';
+}
+
+function togglePassword(id) {
+  const input = document.getElementById(id);
+  input.type = input.type === "password" ? "text" : "password";
+}
+
+function register() {
+  const email = document.getElementById("regEmail").value;
+  const password = document.getElementById("regPassword").value;
+
+  if (!email || !password) {
+    alert("กรอกข้อมูลให้ครบ");
+    return;
+  }
+
+  localStorage.setItem("tagmeEmail", email);
+  localStorage.setItem("tagmePassword", password);
+
+  alert("สมัครสมาชิกสำเร็จ 🎉");
+  showPage("loginPage");
+}
+
+function login() {
+  const email = document.getElementById("loginEmail").value;
+  const password = document.getElementById("loginPassword").value;
+
+  const savedEmail = localStorage.getItem("tagmeEmail");
+  const savedPassword = localStorage.getItem("tagmePassword");
+
+  if (email === savedEmail && password === savedPassword) {
+    document.getElementById("showEmail").innerText = email;
+    showPage("profilePage");
+  } else {
+    alert("อีเมลหรือรหัสผ่านไม่ถูกต้อง");
+  }
+}
+
+function logout() {
+  showPage("loginPage");
+}
+
+showPage("loginPage");
+</script>
+
+</body>
+</html>
